@@ -25,15 +25,13 @@ MODEL = "qwen2.5:latest"
 
 REPO = "/Users/akshaysharma/Documents/Claude/Projects/Akshay-bnb/agent-console"
 PROJECT = "Users-akshaysharma-Documents-Claude-Projects-Akshay-bnb-agent-console"
-TARGET_FN = "highlight"
-NEW_FN = "highlightTarget"
-DEFINITION_FILE = "lib/highlight-context.tsx"
+TARGET_FN = "onStateChange"
+NEW_FN = "onConnectionStateChange"
+DEFINITION_FILE = "hooks/use-agent-socket.ts"
 
 # Ground truth, independently confirmed with grep earlier.
 GROUND_TRUTH_CALL_SITES = {
-    "lib/highlight-context.tsx",
-    "components/chat/ToolCallCard.tsx",
-    "components/timeline/TimelinePanel.tsx",  # appears TWICE in this file
+    "lib/ws-machine.ts",  # 4 call sites: connect, handleClose, handleOpen, scheduleReconnect
 }
 
 
@@ -167,5 +165,5 @@ if __name__ == "__main__":
     blind = run_blind_agent()
     grounded = run_grounded_agent(real_call_sites)
 
-    apply_real_rename()
-    verify()
+    # apply_real_rename() and verify() intentionally not run here —
+    # this pass is just to capture the comparison output, not to modify code.
